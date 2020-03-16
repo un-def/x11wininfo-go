@@ -1,8 +1,8 @@
 project := 'x11wininfo'
 
-export GOPATH := invocation_directory()
+cwd := invocation_directory()
 
-common_build_args := "-a -gcflags=-trimpath=$GOPATH -asmflags=-trimpath=$GOPATH"
+common_build_args := "-a -gcflags=-trimpath=" + cwd + " -asmflags=-trimpath=" + cwd
 static_build_args := "-ldflags '-w -linkmode external -extldflags \"-static -lXau -lXdmcp\"'"
 
 build +extra_build_args='':
