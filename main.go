@@ -1,6 +1,6 @@
 package main
 
-// #cgo pkg-config: xcb-atom
+// #cgo pkg-config: xcb
 // #include <stdlib.h>
 // #include <string.h>
 // #include <xcb/xcb.h>
