@@ -18,11 +18,11 @@ type Connection struct {
 	screen     *C.xcb_screen_t
 }
 
-type windowID uint32
+// WindowID ...
+type WindowID uint32
 
 // Window ...
 type Window struct {
-	ID         windowID
 	window     C.xcb_window_t
 	connection *C.xcb_connection_t
 }
@@ -48,7 +48,7 @@ func (c *Connection) Disconnect() {
 // RootWindow ...
 func (c *Connection) RootWindow() *Window {
 	root := c.screen.root
-	return &Window{windowID(root), root, c.connection}
+	return &Window{root, c.connection}
 }
 
 // FocusedWindow ...
@@ -61,13 +61,18 @@ func (c *Connection) FocusedWindow() (*Window, error) {
 	valuePointer := C.xcb_get_property_value(reply)
 	window := *(*C.xcb_window_t)(valuePointer)
 	C.free(unsafe.Pointer(reply))
-	return &Window{windowID(window), window, c.connection}, nil
+	return &Window{window, c.connection}, nil
 }
 
 var nameAtoms = [...][2]string{
 	{"_NET_WM_NAME", "UTF8_STRING"},
 	{"WM_NAME", "UTF8_STRING"},
 	{"WM_NAME", "STRING"},
+}
+
+// ID ...
+func (w *Window) ID() WindowID {
+	return WindowID(w.window)
 }
 
 // Name ...

@@ -31,7 +31,7 @@ func main() {
 	if err != nil {
 		die(err, conn)
 	}
-	fmt.Printf("id: %d\n", window.ID)
+	fmt.Printf("id: %d\n", window.ID())
 	fmt.Printf("name: %s\n", name)
 	fmt.Printf("instance: %s\n", instance)
 	fmt.Printf("class: %s\n", class)
