@@ -8,6 +8,9 @@ import (
 	"x11wininfo/pkg/x11"
 )
 
+const cmdName = "x11wininfo"
+const cmdVersion = "0.1.0"
+
 var modes = [...]string{
 	"text",
 	"mintext",
@@ -40,7 +43,12 @@ func isModeSupported(mode string) bool {
 
 func main() {
 	modePtr := flag.String("m", modes[0], fmt.Sprintf("output `mode`: %v", modes))
+	versionPtr := flag.Bool("v", false, "print version")
 	flag.Parse()
+	if *versionPtr {
+		fmt.Println(cmdName, "version", cmdVersion)
+		os.Exit(0)
+	}
 	mode := *modePtr
 	if !isModeSupported(mode) {
 		die(fmt.Errorf("unsupported mode: %s", mode), nil)
